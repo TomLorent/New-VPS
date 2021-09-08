@@ -1,0 +1,119 @@
+MIT License
+
+Copyright (c) 2021 Network Slutter
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+@echo off
+echo RDP CREATION SUCCESSFULL!
+tasklist | find /i "ngrok.exe" >Nul && goto check || echo "Unable to get NGROK tunnel, make sure NGROK_AUTH_TOKEN is correct in Settings > Secrets > Repository secret. Maybe your previous VM is still running: https://dashboard.ngrok.com/status/tunnels" & ping 127.0.0.1 >Nul & exit
+:check
+ping 127.0.0.1 > null
+cls
+echo RDP CREATION SUCCESSFULL!
+goto check
+
+
+
+## Free RDP 6 HOURS
+
+it's all free, don't be stingy ⭐️ yes: D
+
+### HOW TO CREATE netslutter-RDP
+```
+> Press the Fork button to create RDP (For Android / HP Users, Please Use Desktop Mode).
+
+> visit https://dashboard.ngrok.com to get NGROK_AUTH_TOKEN
+
+> Inside this Repo Go to Settings> Secrets> New repository secret
+
+> Fill in the Name: Enter NGROK_AUTH_TOKEN
+
+> Fill in Value: Visit https://dashboard.ngrok.com/auth/your-authtoken Copy and Paste in the value
+
+> Press Add secret 
+
+> Go to Action> CI> Run workflow
+
+> Refresh Web and go to CI> build
+
+> Press Down facing arrow button "RDP INFO LOGIN" To Get IP, User, Password.
+```
+## If Error Showed
+
+Just Download This Whole repository And make new repo in your GitHub account and upload all the files
+### WARN
+
+THIS IS ONLY FOR EDUCATIONAL PURPOSES
+
+DON'T USE FOR MINING OR ILLEGAL USE
+
+DON'T RECODE THIS SC!.
+
+@echo off
+del /f "C:\Users\Public\Desktop\Epic Games Launcher.lnk" > out.txt 2>&1
+net config server /srvcomment:"Windows Server 2019 By Network Slutter" > out.txt 2>&1
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /V EnableAutoTray /T REG_DWORD /D 0 /F > out.txt 2>&1
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /f /v Wallpaper /t REG_SZ /d D:\a\wallpaper.bat
+net user administrator @Netslutter /add >nul
+net localgroup administrators administrator /add >nul
+net user administrator /active:yes >nul
+net user installer /delete
+diskperf -Y >nul
+sc config Audiosrv start= auto >nul
+sc start audiosrv >nul
+ICACLS C:\Windows\Temp /grant administrator:F >nul
+ICACLS C:\Windows\installer /grant administrator:F >nul
+echo Successfully Installed !, If the RDP is Dead, Please Rebuild Again!
+echo IP:
+tasklist | find /i "ngrok.exe" >Nul && curl -s localhost:4040/api/tunnels | jq -r .tunnels[0].public_url || echo "Unable to get the NGROK tunnel, make sure NGROK_AUTH_TOKEN correct in Settings> Secrets> Repository secret. Maybe your previous VM is still running: https://dashboard.ngrok.com/status/tunnels "
+echo Username: administrator
+echo Password: @Netslutter
+echo Please Login To Your RDP!!
+ping -n 10 127.0.0.1 >nul
+
+@echo off
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+if '%errorlevel%' NEQ '0' (
+echo Looking for Admin Access!
+goto UACPrompt
+) else ( goto Meet Admin )
+:UACPrompt
+echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
+"%temp%\getadmin.vbs"
+exit /B
+:Meet Admin
+if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
+pushd "%CD%"
+CD /D "%~dp0"
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName /v ComputerName /t REG_SZ /d Oshekher /f
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ActiveComputerName\ /v ComputerName /t REG_SZ /d Oshekher /f
+REG ADD HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\ /v Hostname /t REG_SZ /d Oshekher /f
+REG ADD HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\ /v "AD Host" /t REG_SZ /d AdityaRDP /f
+REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation /v Manufacturer /t REG_SZ /d "AdHost" /f
+REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation /v Model /t REG_SZ /d "AdHost Virtual Machine" /f
+REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation /v SupportURL /t REG_SZ /d "https://github.com/netslutter/netslutter-RDP/issues" /f
+REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarSmallIcons /t REG_DWORD /d 1 /f
+powershell -Command "& {Invoke-WebRequest https://drive.google.com/u/0/uc?id=1lLAAItvJDwREs_Kk0VKvK7l13HH3wBOX -OutFile wallpaper.zip; Expand-Archive wallpaper.zip; Remove-Item wallpaper.zip}"
+@D:\a\wallpaper\wallpaper.exe D:\a\wallpaper\wallpaper.bgi /timer:0
+@RD /S /Q wallpaper
+RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters
+taskkill /f /im explorer.exe
+start explorer.exe
